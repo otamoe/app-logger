@@ -9,7 +9,7 @@ import (
 )
 
 type (
-	FxLogger struct {
+	FXLogger struct {
 		*zap.Logger
 	}
 )
@@ -28,11 +28,11 @@ func WithFXLogger(logger *zap.Logger) fx.Option {
 		logger = GetLogger().Named("fx")
 	}
 	return fx.WithLogger(func() fxevent.Logger {
-		return &FxLogger{logger}
+		return &FXLogger{logger}
 	})
 }
 
-func (l *FxLogger) LogEvent(event fxevent.Event) {
+func (l *FXLogger) LogEvent(event fxevent.Event) {
 	switch e := event.(type) {
 	case *fxevent.OnStartExecuting:
 		l.Info("HOOK OnStart executing", zap.String("FunctionName", e.FunctionName), zap.String("CallerName", e.CallerName))
