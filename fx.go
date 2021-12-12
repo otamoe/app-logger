@@ -25,7 +25,7 @@ func NewFX(logger *zap.Logger) (fxOption fx.Option) {
 
 func WithFXLogger(logger *zap.Logger) fx.Option {
 	if logger == nil {
-		logger = GetLogger()
+		logger = GetLogger().Named("fx")
 	}
 	return fx.WithLogger(func() fxevent.Logger {
 		return &FxLogger{logger}
