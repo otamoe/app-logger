@@ -1,6 +1,7 @@
 package applogger
 
 import (
+	"errors"
 	"strings"
 
 	"go.uber.org/fx"
@@ -17,6 +18,9 @@ type (
 func NewFX(logger *zap.Logger) (fxOption fx.Option) {
 	if logger == nil {
 		logger = GetLogger()
+	}
+	if logger == nil {
+		return fx.Error(errors.New("logger is nil"))
 	}
 	return fx.Provide(func() (out *zap.Logger) {
 		return out

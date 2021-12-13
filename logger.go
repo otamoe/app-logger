@@ -10,9 +10,11 @@ import (
 
 var Logger *zap.Logger
 
-func init() {
-	core := Core(nil)
-	Logger = zap.New(core)
+func New(core zapcore.Core) *zap.Logger {
+	if core == nil {
+		core := Core(nil)
+	}
+	return zap.New(core)
 }
 
 func SetLogger(logger *zap.Logger) {
