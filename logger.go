@@ -12,7 +12,7 @@ var Logger *zap.Logger
 
 func New(core zapcore.Core) *zap.Logger {
 	if core == nil {
-		core := Core(nil)
+		core = Core(nil)
 	}
 	return zap.New(core)
 }

@@ -3,7 +3,7 @@ module github.com/otamoe/app-logger
 go 1.17
 
 require (
-	github.com/otamoe/app-config v0.1.2
+	github.com/otamoe/app-config v0.1.3
 	go.uber.org/fx v1.16.0
 	go.uber.org/zap v1.19.1
 

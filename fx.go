@@ -1,6 +1,7 @@
 package applogger
 
 import (
+	"context"
 	"errors"
 	"strings"
 
@@ -15,14 +16,22 @@ type (
 	}
 )
 
-func NewFX(logger *zap.Logger) (fxOption fx.Option) {
+func NewFX(logger *zap.Logger, stop bool) (fxOption fx.Option) {
 	if logger == nil {
 		logger = GetLogger()
 	}
 	if logger == nil {
 		return fx.Error(errors.New("logger is nil"))
 	}
-	return fx.Provide(func() (out *zap.Logger) {
+	return fx.Provide(func(lc fx.Lifecycle) (out *zap.Logger) {
+		lc.Append(fx.Hook{
+			OnStop: func(c context.Context) error {
+				if stop {
+					return logger.Sync()
+				}
+				return nil
+			},
+		})
 		return out
 	})
 }
